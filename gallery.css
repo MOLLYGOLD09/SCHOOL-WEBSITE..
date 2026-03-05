@@ -1,0 +1,308 @@
+/* ========================================
+   3D ROTATING IMAGE GALLERY - GREEN THEME
+   Silangan NHS LRMS School Website
+   ======================================== */
+
+:root {
+    /* Green Color Variables */
+    --primary-green: #2E7D32;
+    --secondary-green: #66BB6A;
+    --accent-green: #81C784;
+    --primary-green-dark: #1B5E20;
+    --primary-green-light: #43A047;
+    
+    /* Gallery Configuration */
+    --angle-step: 60deg;
+    --radius: 400px;
+    --image-width: 280px;
+    --image-height: 200px;
+    --perspective: 1000px;
+    --scale-center: 1.2;
+    --scale-side: 0.85;
+}
+
+/* Gallery Section */
+.gallery-section {
+    padding: 4rem 1rem;
+    background: linear-gradient(180deg, 
+        var(--bg-primary) 0%, 
+        var(--bg-secondary) 50%,
+        var(--bg-white) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.gallery-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(ellipse at center, 
+        rgba(46, 125, 50, 0.03) 0%, 
+        transparent 70%);
+    pointer-events: none;
+}
+
+.gallery-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.gallery-wrapper {
+    position: relative;
+    width: 100%;
+    height: 450px;
+    margin: 0 auto;
+    perspective: var(--perspective);
+    outline: none;
+}
+
+/* Carousel Container */
+.carousel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 1s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* Carousel Images */
+.carousel-image {
+    position: absolute;
+    width: var(--image-width);
+    height: var(--image-height);
+    left: 50%;
+    top: 50%;
+    margin-left: calc(var(--image-width) / -2);
+    margin-top: calc(var(--image-height) / -2);
+    border-radius: var(--radius-lg);
+    object-fit: cover;
+    box-shadow: 
+        0 8px 32px rgba(27, 94, 32, 0.3),
+        0 4px 16px rgba(46, 125, 50, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: all 1s cubic-bezier(0.4, 0.0, 0.2, 1);
+    backface-visibility: hidden;
+}
+
+/* Center Image - Highlighted */
+.carousel-image.center {
+    transform: translateZ(var(--radius)) scale(var(--scale-center));
+    filter: brightness(1.15);
+    opacity: 1;
+    box-shadow: 
+        0 12px 48px rgba(27, 94, 32, 0.4),
+        0 6px 24px rgba(46, 125, 50, 0.3),
+        0 0 0 3px var(--accent-green),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Side Images */
+.carousel-image:not(.center) {
+    transform: 
+        rotateY(var(--rotate-angle))
+        translateZ(var(--radius))
+        scale(var(--scale-side));
+    opacity: 0.7;
+    filter: brightness(0.85) saturate(0.9);
+}
+
+/* Active Hover State */
+.carousel-image:hover {
+    opacity: 1 !important;
+    filter: brightness(1.05) !important;
+}
+
+/* Navigation Buttons */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, 
+        rgba(46, 125, 50, 0.9) 0%, 
+        rgba(27, 94, 32, 0.95) 100%);
+    color: var(--text-white);
+    font-size: 2rem;
+    font-weight: 300;
+    cursor: pointer;
+    z-index: 10;
+    transition: var(--transition);
+    box-shadow: 
+        0 4px 16px rgba(27, 94, 32, 0.3),
+        0 2px 8px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    line-height: 1;
+}
+
+.carousel-btn:hover {
+    background: linear-gradient(135deg, 
+        var(--primary-green-light) 0%, 
+        var(--primary-green) 100%);
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 
+        0 6px 24px rgba(27, 94, 32, 0.4),
+        0 3px 12px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-btn:active {
+    transform: translateY(-50%) scale(1.05);
+}
+
+.carousel-btn-prev {
+    left: calc(50% - 350px);
+}
+
+.carousel-btn-next {
+    right: calc(50% - 350px);
+}
+
+/* Pagination Dots */
+.carousel-pagination {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 10;
+}
+
+.pagination-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(46, 125, 50, 0.3);
+    border: 2px solid var(--border-light);
+    cursor: pointer;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.pagination-dot:hover {
+    background: var(--secondary-green);
+    transform: scale(1.2);
+}
+
+.pagination-dot.active {
+    background: var(--primary-green);
+    border-color: var(--primary-green);
+    width: 32px;
+    border-radius: 6px;
+    box-shadow: 
+        0 2px 8px rgba(46, 125, 50, 0.4),
+        0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Focus Styles for Accessibility */
+.gallery-wrapper:focus {
+    outline: 3px solid var(--primary-green);
+    outline-offset: 4px;
+    border-radius: var(--radius-lg);
+}
+
+.carousel-btn:focus {
+    outline: 3px solid var(--accent-green);
+    outline-offset: 3px;
+}
+
+/* Responsive Design - Tablet */
+@media (max-width: 1024px) {
+    :root {
+        --radius: 320px;
+        --image-width: 240px;
+        --image-height: 170px;
+        --perspective: 800px;
+    }
+    
+    .gallery-wrapper {
+        height: 400px;
+    }
+    
+    .carousel-btn {
+        width: 48px;
+        height: 48px;
+        font-size: 1.75rem;
+    }
+    
+    .carousel-btn-prev {
+        left: calc(50% - 280px);
+    }
+    
+    .carousel-btn-next {
+        right: calc(50% - 280px);
+    }
+}
+
+/* Responsive Design - Mobile */
+@media (max-width: 768px) {
+    :root {
+        --radius: 220px;
+        --image-width: 180px;
+        --image-height: 130px;
+        --perspective: 600px;
+        --scale-center: 1.15;
+        --scale-side: 0.8;
+    }
+    
+    .gallery-section {
+        padding: 3rem 1rem 2rem;
+    }
+    
+    .gallery-wrapper {
+        height: 320px;
+    }
+    
+    .carousel-btn {
+        width: 44px;
+        height: 44px;
+        font-size: 1.5rem;
+    }
+    
+    .carousel-btn-prev {
+        left: 10px;
+    }
+    
+    .carousel-btn-next {
+        right: 10px;
+    }
+    
+    .pagination-dot {
+        width: 10px;
+        height: 10px;
+    }
+    
+    .pagination-dot.active {
+        width: 28px;
+    }
+}
+
+/* Responsive Design - Small Mobile */
+@media (max-width: 480px) {
+    :root {
+        --radius: 180px;
+        --image-width: 150px;
+        --image-height: 110px;
+        --perspective: 500px;
+    }
+    
+    .gallery-wrapper {
+        height: 280px;
+    }
+    
+    .carousel-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1.25rem;
+    }
+}
