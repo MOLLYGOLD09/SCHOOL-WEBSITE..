@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
             </div>
             <div class="loading-logo">
-                <img src="images/SN.jpg" alt="School Logo">
+                <img src="SN.jpg" alt="School Logo">
             </div>
             <h2 class="loading-text">Welcome to SNHS</h2>
             <p class="loading-subtext">Preparing your learning space… Please wait.</p>
